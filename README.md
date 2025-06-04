@@ -1,31 +1,31 @@
 # FIAP Challenge Games (FCG)
 
-## 💡 Sobre o Projeto
+## Sobre o Projeto
 
 Bem-vindo ao FCG - uma iniciativa inovadora da FIAP para revolucionar a educação em tecnologia através dos games! Este é o MVP da primeira fase do projeto, onde desenvolvemos uma API REST em .NET 8 que servirá como base para uma plataforma educacional de jogos.
 
 Nossa missão? Criar uma base sólida que não só atenda às necessidades atuais dos alunos FIAP, Alura e PM3, mas que também esteja preparada para evoluir com recursos incríveis como matchmaking e gerenciamento de servidores nas próximas fases.
 
-## 🚀 Principais Funcionalidades
+## Principais Funcionalidades
 
-### 👤 Para os Usuários
+### Para os Usuários
 - **Cadastro Simplificado e Seguro**
   - Nome, e-mail e senha
   - Validação rigorosa de e-mail
   - Senha forte obrigatória (mínimo 8 caracteres, com números, letras e caracteres especiais)
   - Sua biblioteca pessoal de jogos
 
-### 👑 Para Administradores
+### Para Administradores
 - Gestão completa de jogos
 - Administração de usuários
 - Controle total da plataforma
 
-### 🎮 Gestão de Jogos
+### Gestão de Jogos
 - Cadastro e manutenção do catálogo
 - Biblioteca pessoal para cada usuário
 - Sistema de propriedade de jogos
 
-## 🛠️ Tecnologias e Práticas
+## Tecnologias e Práticas
 
 ### Base Tecnológica
 - **.NET 8**: Última versão do framework, garantindo performance e recursos modernos
@@ -44,7 +44,7 @@ Nossa missão? Criar uma base sólida que não só atenda às necessidades atuai
 - **Testes Unitários**: Garantia de qualidade do código
 - **Middleware de Tratamento de Erros**: Respostas padronizadas e logs estruturados
 
-## 🚦 Como Começar
+## Como Começar
 
 ### Pré-requisitos
 - .NET 8 SDK
@@ -80,7 +80,7 @@ cd src/FiapProjetoGames.API
 dotnet ef database update
 ```
 
-### 🎯 Endpoints Principais
+### Endpoints Principais
 
 #### Autenticação
 ```
@@ -95,7 +95,7 @@ POST /api/jogos - Adicione novos jogos (Admin)
 GET /api/biblioteca - Sua coleção pessoal
 ```
 
-## 🔒 Segurança
+## Segurança
 
 Levamos a segurança a sério! Implementamos:
 - Autenticação via JWT
@@ -103,7 +103,7 @@ Levamos a segurança a sério! Implementamos:
 - Autorização baseada em roles
 - Validação de propriedade de jogos
 
-## 🤝 Contribuindo
+## Contribuindo
 
 Quer fazer parte dessa revolução na educação? Aqui está como:
 
@@ -113,14 +113,9 @@ Quer fazer parte dessa revolução na educação? Aqui está como:
 4. Push para a branch (`git push origin feature/SuaFeature`)
 5. Abra um Pull Request
 
-## 📝 Licença
-
-Este projeto está sob a licença MIT.
-
 ## 📬 Contato
 
-Dúvidas? Sugestões? Entre em contato!
-[Seu Nome] - [seu-email@exemplo.com]
+E-mail: `irgopk13@gmail.com`
 
 ---
-Desenvolvido com 💙 pela equipe FCG 
+Desenvolvido com 💙 por Igor Alexandre
