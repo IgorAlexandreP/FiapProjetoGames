@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # FIAP Challenge Games (FCG)
 
 ## 💡 Sobre o Projeto
@@ -124,3 +125,6 @@ Dúvidas? Sugestões? Entre em contato!
 
 ---
 Desenvolvido com 💙 pela equipe FCG 
+=======
+# FiapProjetoGames
+>>>>>>> 147cfe0f6852a2a78552d4ca644a0175ade0f4c3
