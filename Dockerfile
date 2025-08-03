@@ -32,10 +32,6 @@ RUN dotnet publish "FiapProjetoGames.API.csproj" -c Release -o /app/publish /p:U
 FROM base AS final
 WORKDIR /app
 
-# Criar usuário não-root para segurança
-RUN adduser --disabled-password --gecos '' appuser && chown -R appuser /app
-USER appuser
-
 # Copiar arquivos publicados
 COPY --from=publish /app/publish .
 
