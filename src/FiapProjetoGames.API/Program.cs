@@ -264,27 +264,7 @@ try
     app.UseAuthentication();
     app.UseAuthorization();
 
-    // Health Checks
-    app.MapHealthChecks("/health", new HealthCheckOptions
-    {
-        Predicate = _ => true,
-        ResponseWriter = async (context, report) =>
-        {
-            context.Response.ContentType = "application/json";
-            var result = new
-            {
-                status = report.Status.ToString(),
-                checks = report.Entries.Select(x => new
-                {
-                    name = x.Key,
-                    status = x.Value.Status.ToString(),
-                    description = x.Value.Description
-                })
-            };
-            await context.Response.WriteAsJsonAsync(result);
-        }
-    });
-
+    // Health Checks - Removendo mapeamento conflitante para permitir que o HealthController funcione
     app.MapHealthChecks("/health/ready", new HealthCheckOptions
     {
         Predicate = check => check.Tags.Contains("ready")
