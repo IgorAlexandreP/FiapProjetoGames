@@ -24,7 +24,7 @@ namespace FiapProjetoGames.Infrastructure.Data
                 entity.Property(e => e.SenhaHash).IsRequired();
                 entity.Property(e => e.IsAdmin).HasDefaultValue(false);
                 entity.Property(e => e.Ativo).HasDefaultValue(true);
-                entity.Property(e => e.DataCriacao).HasDefaultValueSql("GETUTCDATE()");
+                entity.Property(e => e.DataCriacao).HasDefaultValueSql("CURRENT_TIMESTAMP");
                 entity.Property(e => e.TentativasLogin).HasDefaultValue(0);
             });
 

@@ -115,13 +115,14 @@ try
     {
         // Fallback para variáveis de ambiente individuais
         var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
-        var dbName = Environment.GetEnvironmentVariable("DB_NAME") ?? "FiapProjetoGames";
-        var dbUser = Environment.GetEnvironmentVariable("DB_USER") ?? "sa";
+        var dbName = Environment.GetEnvironmentVariable("DB_NAME") ?? "railway";
+        var dbUser = Environment.GetEnvironmentVariable("DB_USER") ?? "root";
         var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
+        var dbPort = Environment.GetEnvironmentVariable("DB_PORT") ?? "3306";
         
         if (!string.IsNullOrEmpty(dbHost) && !string.IsNullOrEmpty(dbPassword))
         {
-            connectionString = $"Server={dbHost};Database={dbName};User Id={dbUser};Password={dbPassword};TrustServerCertificate=true;MultipleActiveResultSets=true;Encrypt=false";
+            connectionString = $"Server={dbHost};Port={dbPort};Database={dbName};User Id={dbUser};Password={dbPassword};";
         }
         else
         {
@@ -132,14 +133,12 @@ try
     Log.Information("Using connection string: {ConnectionString}", connectionString.Replace(dbPassword ?? "", "***"));
     
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseSqlServer(connectionString, 
-            sqlServerOptionsAction: sqlOptions =>
-            {
-                sqlOptions.EnableRetryOnFailure(
-                    maxRetryCount: 5,
-                    maxRetryDelay: TimeSpan.FromSeconds(30),
-                    errorNumbersToAdd: null);
-            }));
+        options.UseMySql(connectionString, 
+            ServerVersion.AutoDetect(connectionString),
+            mySqlOptions => mySqlOptions.EnableRetryOnFailure(
+                maxRetryCount: 5,
+                maxRetryDelay: TimeSpan.FromSeconds(30),
+                errorNumbersToAdd: null)));
 
     // Configure JWT Authentication
     var jwtSecret = builder.Configuration["JwtSettings:Secret"] ?? 
