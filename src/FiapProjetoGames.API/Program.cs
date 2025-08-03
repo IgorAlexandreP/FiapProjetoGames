@@ -112,7 +112,25 @@ try
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
     
-    if (string.IsNullOrEmpty(connectionString))
+    // Se a connection string contém variáveis não interpoladas, construir manualmente
+    if (!string.IsNullOrEmpty(connectionString) && connectionString.Contains("${"))
+    {
+        var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
+        var dbName = Environment.GetEnvironmentVariable("DB_NAME") ?? "railway";
+        var dbUser = Environment.GetEnvironmentVariable("DB_USER") ?? "root";
+        dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
+        var dbPort = Environment.GetEnvironmentVariable("DB_PORT") ?? "3306";
+        
+        if (!string.IsNullOrEmpty(dbHost) && !string.IsNullOrEmpty(dbPassword))
+        {
+            connectionString = $"Server={dbHost};Port={dbPort};Database={dbName};User Id={dbUser};Password={dbPassword};";
+        }
+        else
+        {
+            throw new InvalidOperationException("Environment variables not configured properly.");
+        }
+    }
+    else if (string.IsNullOrEmpty(connectionString))
     {
         // Fallback para variáveis de ambiente individuais
         var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
