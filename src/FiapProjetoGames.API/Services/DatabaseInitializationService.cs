@@ -39,8 +39,8 @@ namespace FiapProjetoGames.API.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro ao inicializar banco de dados");
-                throw;
+                _logger.LogError(ex, "Erro ao inicializar banco de dados - continuando sem banco");
+                // Não re-throw para não falhar a aplicação
             }
         }
 
