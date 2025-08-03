@@ -1,0 +1,60 @@
+### Teste da API no Railway
+### Substitua YOUR_RAILWAY_URL pela URL real da sua aplicação
+
+### 1. Health Check (deve funcionar sempre)
+GET https://YOUR_RAILWAY_URL/health
+Content-Type: application/json
+
+### 2. Root Endpoint
+GET https://YOUR_RAILWAY_URL/
+Content-Type: application/json
+
+### 3. Swagger Documentation
+GET https://YOUR_RAILWAY_URL/api-docs
+Content-Type: application/json
+
+### 4. Listar Jogos (público)
+GET https://YOUR_RAILWAY_URL/api/jogos
+Content-Type: application/json
+
+### 5. Cadastrar Usuário
+POST https://YOUR_RAILWAY_URL/api/usuarios/cadastro
+Content-Type: application/json
+
+{
+    "nome": "João Silva",
+    "email": "joao@teste.com",
+    "senha": "Teste123!",
+    "confirmarSenha": "Teste123!"
+}
+
+### 6. Login
+POST https://YOUR_RAILWAY_URL/api/usuarios/login
+Content-Type: application/json
+
+{
+    "email": "joao@teste.com",
+    "senha": "Teste123!"
+}
+
+### 7. Listar Biblioteca (com token)
+GET https://YOUR_RAILWAY_URL/api/biblioteca
+Authorization: Bearer SEU_TOKEN_AQUI
+Content-Type: application/json
+
+### 8. Comprar Jogo (com token)
+POST https://YOUR_RAILWAY_URL/api/biblioteca/comprar
+Authorization: Bearer SEU_TOKEN_AQUI
+Content-Type: application/json
+
+{
+    "jogoId": "ID_DO_JOGO_AQUI"
+}
+
+### 9. Health Check Detalhado
+GET https://YOUR_RAILWAY_URL/health/detailed
+Content-Type: application/json
+
+### 10. Teste de Conectividade
+GET https://YOUR_RAILWAY_URL/health/ping
+Content-Type: application/json 
