@@ -37,7 +37,7 @@ namespace FiapProjetoGames.API.Controllers
             return Ok(jogos);
         }
 
-        [Authorize(Policy = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<JogoDto>> Criar(CadastroJogoDto cadastroJogoDto)
         {
@@ -58,7 +58,7 @@ namespace FiapProjetoGames.API.Controllers
             return CreatedAtAction(nameof(ObterPorId), new { id = jogo.Id }, jogo);
         }
 
-        [Authorize(Policy = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<ActionResult> Atualizar(Guid id, AtualizacaoJogoDto atualizacaoJogoDto)
         {
@@ -66,7 +66,7 @@ namespace FiapProjetoGames.API.Controllers
             return NoContent();
         }
 
-        [Authorize(Policy = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> Deletar(Guid id)
         {

@@ -80,6 +80,36 @@ cd src/FiapProjetoGames.API
 dotnet ef database update
 ```
 
+### Deploy no Railway
+
+Para fazer o deploy no Railway, siga estes passos:
+
+1. **Conecte seu repositório ao Railway**
+   - Acesse [railway.app](https://railway.app)
+   - Conecte seu repositório GitHub
+   - Selecione este projeto
+
+2. **Configure as Variáveis de Ambiente**
+   No Railway, adicione as seguintes variáveis de ambiente:
+   ```
+   ASPNETCORE_ENVIRONMENT=Production
+   ASPNETCORE_URLS=http://+:8080
+   PORT=8080
+   DB_HOST=sua-host-do-banco
+   DB_NAME=sua-database-name
+   DB_USER=seu-usuario
+   DB_PASSWORD=sua-senha
+   JWT_SECRET=sua-chave-secreta-jwt-muito-longa-e-segura-2024
+   ```
+
+3. **Deploy Automático**
+   - O Railway detectará automaticamente o Dockerfile
+   - O deploy será feito automaticamente a cada push para a branch main
+
+4. **Verificação do Deploy**
+   - Acesse o endpoint `/health` para verificar se a API está funcionando
+   - Acesse `/swagger` para ver a documentação da API
+
 ### Endpoints Principais
 
 #### Autenticação
@@ -93,6 +123,13 @@ POST /api/usuarios/login - Acesse a plataforma
 GET /api/jogos - Explore o catálogo
 POST /api/jogos - Adicione novos jogos (Admin)
 GET /api/biblioteca - Sua coleção pessoal
+```
+
+#### Health Checks
+```
+GET /health - Status geral da aplicação
+GET /health/ready - Verificação de prontidão
+GET /health/live - Verificação de vida
 ```
 
 ## Segurança
@@ -119,4 +156,4 @@ E-mail: irgopk13@gmail.com
 
 ---
 
-Desenvolvido com �� por Igor Alexandre 
+Desenvolvido com ❤️ por Igor Alexandre 

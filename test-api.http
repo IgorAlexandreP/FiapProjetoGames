@@ -1,0 +1,49 @@
+### Teste de Health Check
+GET {{baseUrl}}/health
+
+### Teste de Swagger
+GET {{baseUrl}}/swagger
+
+### Teste de Cadastro de Usuário
+POST {{baseUrl}}/api/usuarios/cadastro
+Content-Type: application/json
+
+{
+  "nome": "Teste Usuario",
+  "email": "teste@fiap.com.br",
+  "senha": "Teste@123"
+}
+
+### Teste de Login
+POST {{baseUrl}}/api/usuarios/login
+Content-Type: application/json
+
+{
+  "email": "teste@fiap.com.br",
+  "senha": "Teste@123"
+}
+
+### Teste de Listagem de Jogos (sem autenticação)
+GET {{baseUrl}}/api/jogos
+
+### Teste de Jogo por ID (sem autenticação)
+GET {{baseUrl}}/api/jogos/00000000-0000-0000-0000-000000000001
+
+### Teste de Biblioteca (com autenticação)
+GET {{baseUrl}}/api/biblioteca
+Authorization: Bearer {{token}}
+
+### Teste de Métricas
+GET {{baseUrl}}/api/metrics
+
+### Teste de Root
+GET {{baseUrl}}/
+
+### Teste de Ping
+GET {{baseUrl}}/health/ping
+
+### Teste de Ready
+GET {{baseUrl}}/health/ready
+
+### Teste de Live
+GET {{baseUrl}}/health/live 
