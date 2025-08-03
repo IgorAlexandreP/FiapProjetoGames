@@ -164,11 +164,11 @@ app.UseForwardedHeaders();
 
 app.UseHttpsRedirection();
 
-// Adiciona os middlewares na ordem correta
-app.UseMiddleware<ErrorHandlingMiddleware>();
-app.UseMiddleware<ValidationMiddleware>();
-app.UseMiddleware<AuditMiddleware>();
-app.UseMiddleware<RateLimitingMiddleware>();
+// TEMPORARIAMENTE REMOVIDO: Middlewares para debug
+// app.UseMiddleware<ErrorHandlingMiddleware>();
+// app.UseMiddleware<ValidationMiddleware>();
+// app.UseMiddleware<AuditMiddleware>();
+// app.UseMiddleware<RateLimitingMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();
