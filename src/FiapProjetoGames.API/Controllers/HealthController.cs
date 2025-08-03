@@ -57,6 +57,16 @@ namespace FiapProjetoGames.API.Controllers
         }
 
         /// <summary>
+        /// Endpoint de teste na raiz
+        /// </summary>
+        /// <returns>Teste simples</returns>
+        [HttpGet("ping")]
+        public IActionResult Ping()
+        {
+            return Ok("pong");
+        }
+
+        /// <summary>
         /// Health check detalhado com informações do sistema
         /// </summary>
         /// <returns>Informações detalhadas de saúde da aplicação</returns>
