@@ -125,43 +125,4 @@ namespace FiapProjetoGames.API.Controllers
             return Ok("alive");
         }
     }
-
-    [ApiController]
-    [Route("")]
-    public class RootController : ControllerBase
-    {
-        private readonly ILogger<RootController> _logger;
-
-        public RootController(ILogger<RootController> logger)
-        {
-            _logger = logger;
-        }
-
-        /// <summary>
-        /// Endpoint na raiz para testar roteamento
-        /// </summary>
-        /// <returns>Informações da API</returns>
-        [HttpGet]
-        public IActionResult Get()
-        {
-            _logger.LogInformation("Root endpoint acessado em {Time}", DateTime.UtcNow);
-            
-            return Ok(new
-            {
-                message = "FIAP Projeto Games API está funcionando!",
-                timestamp = DateTime.UtcNow,
-                version = "2.0.0",
-                endpoints = new[]
-                {
-                    "/health",
-                    "/health/test",
-                    "/health/ping",
-                    "/api/usuarios/cadastro",
-                    "/api/usuarios/login",
-                    "/api/jogos",
-                    "/api/biblioteca"
-                }
-            });
-        }
-    }
 } 
