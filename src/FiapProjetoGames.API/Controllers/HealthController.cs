@@ -36,6 +36,27 @@ namespace FiapProjetoGames.API.Controllers
         }
 
         /// <summary>
+        /// Endpoint de teste simples
+        /// </summary>
+        /// <returns>Mensagem de teste</returns>
+        [HttpGet("test")]
+        public IActionResult Test()
+        {
+            return Ok(new
+            {
+                message = "API funcionando!",
+                timestamp = DateTime.UtcNow,
+                endpoints = new[]
+                {
+                    "/api/usuarios/cadastro",
+                    "/api/usuarios/login", 
+                    "/api/jogos",
+                    "/api/biblioteca"
+                }
+            });
+        }
+
+        /// <summary>
         /// Health check detalhado com informações do sistema
         /// </summary>
         /// <returns>Informações detalhadas de saúde da aplicação</returns>
