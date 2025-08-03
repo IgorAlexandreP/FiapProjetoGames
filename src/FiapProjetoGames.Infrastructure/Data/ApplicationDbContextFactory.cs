@@ -8,7 +8,8 @@ namespace FiapProjetoGames.Infrastructure.Data
         public ApplicationDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=FiapProjetoGames;Trusted_Connection=True;MultipleActiveResultSets=true");
+            optionsBuilder.UseMySql("Server=localhost;Port=3306;Database=FiapProjetoGames;User Id=root;Password=;", 
+                ServerVersion.AutoDetect("Server=localhost;Port=3306;Database=FiapProjetoGames;User Id=root;Password=;"));
 
             return new ApplicationDbContext(optionsBuilder.Options);
         }
