@@ -106,68 +106,10 @@ try
         });
     });
 
-    // Configure DbContext - Simplificado para garantir que funcione
-    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
-    
-    // Se a connection string contém variáveis não interpoladas, construir manualmente
-    if (!string.IsNullOrEmpty(connectionString) && connectionString.Contains("${"))
-    {
-        var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
-        var dbName = Environment.GetEnvironmentVariable("DB_NAME") ?? "railway";
-        var dbUser = Environment.GetEnvironmentVariable("DB_USER") ?? "root";
-        dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
-        var dbPort = Environment.GetEnvironmentVariable("DB_PORT") ?? "3306";
-        
-        if (!string.IsNullOrEmpty(dbHost) && !string.IsNullOrEmpty(dbPassword))
-        {
-            connectionString = $"Server={dbHost};Port={dbPort};Database={dbName};User Id={dbUser};Password={dbPassword};";
-        }
-        else
-        {
-            // Se não conseguir conectar ao banco, usar in-memory temporariamente
-            Log.Warning("Database connection not available, using in-memory database");
-            connectionString = null;
-        }
-    }
-    else if (string.IsNullOrEmpty(connectionString))
-    {
-        // Fallback para variáveis de ambiente individuais
-        var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
-        var dbName = Environment.GetEnvironmentVariable("DB_NAME") ?? "railway";
-        var dbUser = Environment.GetEnvironmentVariable("DB_USER") ?? "root";
-        dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
-        var dbPort = Environment.GetEnvironmentVariable("DB_PORT") ?? "3306";
-        
-        if (!string.IsNullOrEmpty(dbHost) && !string.IsNullOrEmpty(dbPassword))
-        {
-            connectionString = $"Server={dbHost};Port={dbPort};Database={dbName};User Id={dbUser};Password={dbPassword};";
-        }
-        else
-        {
-            Log.Warning("Database connection not available, using in-memory database");
-            connectionString = null;
-        }
-    }
-    
-    if (!string.IsNullOrEmpty(connectionString))
-    {
-        Log.Information("Using MySQL connection string: {ConnectionString}", connectionString.Replace(dbPassword ?? "", "***"));
-        
-        builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseMySql(connectionString, 
-                ServerVersion.AutoDetect(connectionString),
-                mySqlOptions => mySqlOptions.EnableRetryOnFailure(
-                    maxRetryCount: 5,
-                    maxRetryDelay: TimeSpan.FromSeconds(30),
-                    errorNumbersToAdd: null)));
-    }
-    else
-    {
-        Log.Information("Using in-memory database for testing");
-        builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseInMemoryDatabase("TestDatabase"));
-    }
+    // Configure DbContext - Forçando in-memory para garantir funcionamento
+    Log.Information("Using in-memory database for Railway deployment");
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseInMemoryDatabase("RailwayDatabase"));
 
     // Configure JWT Authentication
     var jwtSecret = builder.Configuration["JwtSettings:Secret"] ?? 
