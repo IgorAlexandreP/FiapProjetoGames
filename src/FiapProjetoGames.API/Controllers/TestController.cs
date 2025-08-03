@@ -50,5 +50,35 @@ namespace FiapProjetoGames.API.Controllers
         {
             return Ok("pong");
         }
+
+        /// <summary>
+        /// Endpoint de debug para verificar roteamento
+        /// </summary>
+        /// <returns>Informações de debug</returns>
+        [HttpGet("debug")]
+        public IActionResult Debug()
+        {
+            return Ok(new
+            {
+                message = "Debug endpoint funcionando!",
+                timestamp = DateTime.UtcNow,
+                request = new
+                {
+                    method = Request.Method,
+                    path = Request.Path,
+                    query = Request.QueryString.ToString(),
+                    headers = Request.Headers.ToDictionary(h => h.Key, h => h.Value.ToString()),
+                    host = Request.Host.ToString(),
+                    scheme = Request.Scheme,
+                    protocol = Request.Protocol
+                },
+                environment = new
+                {
+                    aspnetcore_environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
+                    aspnetcore_urls = Environment.GetEnvironmentVariable("ASPNETCORE_URLS"),
+                    port = Environment.GetEnvironmentVariable("PORT")
+                }
+            });
+        }
     }
 } 

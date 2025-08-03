@@ -159,6 +159,9 @@ app.UseCors(builder => builder
        .AllowAnyMethod()
        .AllowAnyHeader());
 
+// Configuração para proxy (Railway)
+app.UseForwardedHeaders();
+
 app.UseHttpsRedirection();
 
 // Adiciona os middlewares na ordem correta
@@ -175,6 +178,22 @@ if (app.Environment.IsDevelopment())
 {
     app.UseMiddleware<AuthenticationDebugMiddleware>();
 }
+
+// Adiciona logging para debug de roteamento
+app.Use(async (context, next) =>
+{
+    var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
+    logger.LogInformation("Request: {Method} {Path} from {IP}", 
+        context.Request.Method, 
+        context.Request.Path, 
+        context.Connection.RemoteIpAddress);
+    
+    await next();
+    
+    logger.LogInformation("Response: {StatusCode} for {Path}", 
+        context.Response.StatusCode, 
+        context.Request.Path);
+});
 
 app.MapControllers();
 
