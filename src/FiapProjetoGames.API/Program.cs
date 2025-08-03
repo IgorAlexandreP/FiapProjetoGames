@@ -151,7 +151,7 @@ app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "FIAP Projeto Games API v2.0");
-    c.RoutePrefix = string.Empty; // Serve Swagger UI at root
+    c.RoutePrefix = "swagger"; // Mudança: Swagger agora em /swagger
 });
 
 app.UseCors(builder => builder
