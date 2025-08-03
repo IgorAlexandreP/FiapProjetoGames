@@ -18,12 +18,18 @@ namespace FiapProjetoGames.Application.Services
         private readonly IUsuarioRepository _usuarioRepository;
         private readonly ILogService _logService;
         private readonly string _jwtSecret;
+        private readonly string _jwtIssuer;
+        private readonly string _jwtAudience;
+        private readonly int _jwtExpirationHours;
 
-        public UsuarioService(IUsuarioRepository usuarioRepository, ILogService logService, string jwtSecret)
+        public UsuarioService(IUsuarioRepository usuarioRepository, ILogService logService, string jwtSecret, string jwtIssuer = "FiapProjetoGames", string jwtAudience = "FiapProjetoGamesUsers", int jwtExpirationHours = 24)
         {
             _usuarioRepository = usuarioRepository;
             _logService = logService;
             _jwtSecret = jwtSecret;
+            _jwtIssuer = jwtIssuer;
+            _jwtAudience = jwtAudience;
+            _jwtExpirationHours = jwtExpirationHours;
         }
 
         public async Task<UsuarioDto> CadastrarAsync(CadastroUsuarioDto cadastroUsuarioDto)
@@ -378,9 +384,13 @@ namespace FiapProjetoGames.Application.Services
                 {
                     new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
                     new Claim(ClaimTypes.Email, usuario.Email),
-                    new Claim(ClaimTypes.Role, usuario.IsAdmin ? "Admin" : "User")
+                    new Claim(ClaimTypes.Role, usuario.IsAdmin ? "Admin" : "User"),
+                    new Claim("name", usuario.Nome),
+                    new Claim("email", usuario.Email)
                 }),
-                Expires = DateTime.UtcNow.AddDays(7),
+                Issuer = _jwtIssuer,
+                Audience = _jwtAudience,
+                Expires = DateTime.UtcNow.AddHours(_jwtExpirationHours),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 

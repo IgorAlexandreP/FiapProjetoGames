@@ -145,6 +145,10 @@ try
     var jwtSecret = builder.Configuration["JwtSettings:Secret"] ?? 
                    Environment.GetEnvironmentVariable("JWT_SECRET") ??
                    throw new InvalidOperationException("JWT Secret not configured");
+    var jwtIssuer = builder.Configuration["JwtSettings:Issuer"] ?? "FiapProjetoGames";
+    var jwtAudience = builder.Configuration["JwtSettings:Audience"] ?? "FiapProjetoGamesUsers";
+    var jwtExpirationHours = int.Parse(builder.Configuration["JwtSettings:ExpirationHours"] ?? "24");
+    
     var key = Encoding.ASCII.GetBytes(jwtSecret);
 
     builder.Services.AddAuthentication(x =>
@@ -160,8 +164,10 @@ try
         {
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(key),
-            ValidateIssuer = false,
-            ValidateAudience = false,
+            ValidateIssuer = !string.IsNullOrEmpty(jwtIssuer),
+            ValidIssuer = jwtIssuer,
+            ValidateAudience = !string.IsNullOrEmpty(jwtAudience),
+            ValidAudience = jwtAudience,
             ClockSkew = TimeSpan.Zero
         };
     });
@@ -190,7 +196,7 @@ try
     {
         var usuarioRepository = provider.GetRequiredService<IUsuarioRepository>();
         var logService = provider.GetRequiredService<ILogService>();
-        return new UsuarioService(usuarioRepository, logService, jwtSecret);
+        return new UsuarioService(usuarioRepository, logService, jwtSecret, jwtIssuer, jwtAudience, jwtExpirationHours);
     });
     builder.Services.AddScoped<IJogoService, JogoService>();
     builder.Services.AddScoped<IBibliotecaJogoService, BibliotecaJogoService>();
