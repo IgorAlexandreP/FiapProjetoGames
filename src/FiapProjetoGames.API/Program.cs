@@ -146,15 +146,13 @@ builder.Services.AddScoped<IValidator<UsuarioFiltroDto>, UsuarioFiltroValidation
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// Habilitar Swagger em todos os ambientes para facilitar testes
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "FIAP Projeto Games API v2.0");
-        c.RoutePrefix = string.Empty; // Serve Swagger UI at root
-    });
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "FIAP Projeto Games API v2.0");
+    c.RoutePrefix = string.Empty; // Serve Swagger UI at root
+});
 
 app.UseCors(builder => builder
        .AllowAnyOrigin()
