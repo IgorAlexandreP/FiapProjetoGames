@@ -49,30 +49,9 @@ namespace FiapProjetoGames.API.Services
             // Adiciona alguns jogos de exemplo
             var jogos = new[]
             {
-                new Domain.Entities.Jogo
-                {
-                    Id = Guid.NewGuid(),
-                    Titulo = "Pac-Man",
-                    Descricao = "Jogo clássico de labirinto",
-                    Preco = 19.99m,
-                    DataCriacao = DateTime.UtcNow
-                },
-                new Domain.Entities.Jogo
-                {
-                    Id = Guid.NewGuid(),
-                    Titulo = "Tetris",
-                    Descricao = "Jogo de puzzle com blocos",
-                    Preco = 14.99m,
-                    DataCriacao = DateTime.UtcNow
-                },
-                new Domain.Entities.Jogo
-                {
-                    Id = Guid.NewGuid(),
-                    Titulo = "Snake",
-                    Descricao = "Jogo da cobrinha",
-                    Preco = 9.99m,
-                    DataCriacao = DateTime.UtcNow
-                }
+                new Domain.Entities.Jogo("Pac-Man", "Jogo clássico de labirinto", 19.99m),
+                new Domain.Entities.Jogo("Tetris", "Jogo de puzzle com blocos", 14.99m),
+                new Domain.Entities.Jogo("Snake", "Jogo da cobrinha", 9.99m)
             };
 
             context.Jogos.AddRange(jogos);

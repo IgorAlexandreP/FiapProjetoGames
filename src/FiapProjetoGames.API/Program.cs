@@ -110,6 +110,7 @@ try
 
     // Configure DbContext
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
     
     if (string.IsNullOrEmpty(connectionString))
     {
@@ -117,7 +118,7 @@ try
         var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
         var dbName = Environment.GetEnvironmentVariable("DB_NAME") ?? "railway";
         var dbUser = Environment.GetEnvironmentVariable("DB_USER") ?? "root";
-        var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
+        dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
         var dbPort = Environment.GetEnvironmentVariable("DB_PORT") ?? "3306";
         
         if (!string.IsNullOrEmpty(dbHost) && !string.IsNullOrEmpty(dbPassword))
@@ -201,8 +202,8 @@ try
     builder.Services.AddScoped<IBibliotecaJogoService, BibliotecaJogoService>();
 
     // Register Validators
-    builder.Services.AddScoped<IValidator<CadastroUsuarioDto>, UsuarioValidation>();
-    builder.Services.AddScoped<IValidator<LoginUsuarioDto>, UserValidation>();
+    builder.Services.AddScoped<IValidator<CadastroUsuarioDto>, CadastroUsuarioValidation>();
+    builder.Services.AddScoped<IValidator<LoginUsuarioDto>, LoginUsuarioValidation>();
 
     // Configure Memory Cache
     builder.Services.AddMemoryCache();
