@@ -80,35 +80,10 @@ cd src/FiapProjetoGames.API
 dotnet ef database update
 ```
 
-### Deploy no Railway
-
-Para fazer o deploy no Railway, siga estes passos:
-
-1. **Conecte seu repositório ao Railway**
-   - Acesse [railway.app](https://railway.app)
-   - Conecte seu repositório GitHub
-   - Selecione este projeto
-
-2. **Configure as Variáveis de Ambiente**
-   No Railway, adicione as seguintes variáveis de ambiente:
-   ```
-   ASPNETCORE_ENVIRONMENT=Production
-   ASPNETCORE_URLS=http://+:8080
-   PORT=8080
-   DB_HOST=sua-host-do-banco
-   DB_NAME=sua-database-name
-   DB_USER=seu-usuario
-   DB_PASSWORD=sua-senha
-   JWT_SECRET=sua-chave-secreta-jwt-muito-longa-e-segura-2024
-   ```
-
-3. **Deploy Automático**
-   - O Railway detectará automaticamente o Dockerfile
-   - O deploy será feito automaticamente a cada push para a branch main
-
-4. **Verificação do Deploy**
-   - Acesse o endpoint `/health` para verificar se a API está funcionando
-   - Acesse `/swagger` para ver a documentação da API
+5. **Execute a Aplicação**
+```bash
+dotnet run
+```
 
 ### Endpoints Principais
 
@@ -132,6 +107,11 @@ GET /health/ready - Verificação de prontidão
 GET /health/live - Verificação de vida
 ```
 
+#### Documentação da API
+```
+GET /swagger - Documentação interativa da API
+```
+
 ## Segurança
 
 Levamos a segurança a sério! Implementamos:
@@ -140,15 +120,16 @@ Levamos a segurança a sério! Implementamos:
 - Autorização baseada em roles
 - Validação de propriedade de jogos
 
-## Contribuindo
+## Estrutura do Projeto
 
-Quer fazer parte dessa revolução na educação? Aqui está como:
-
-1. Faça um fork
-2. Crie sua branch (`git checkout -b feature/SuaFeature`)
-3. Commit suas mudanças (`git commit -m 'Adiciona feature incrível'`)
-4. Push para a branch (`git push origin feature/SuaFeature`)
-5. Abra um Pull Request
+```
+src/
+├── FiapProjetoGames.API/          # Camada de apresentação
+├── FiapProjetoGames.Application/   # Camada de aplicação
+├── FiapProjetoGames.Domain/        # Camada de domínio
+├── FiapProjetoGames.Infrastructure/# Camada de infraestrutura
+└── FiapProjetoGames.Tests/         # Testes unitários
+```
 
 ## Contato
 

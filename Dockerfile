@@ -14,18 +14,16 @@ COPY . .
 WORKDIR /src/FiapProjetoGames.API
 RUN dotnet build "FiapProjetoGames.API.csproj" -c Release -o /app/build
 
+# Etapa 2 - Publicação
 FROM build AS publish
 WORKDIR /src/FiapProjetoGames.API
 RUN dotnet publish "FiapProjetoGames.API.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
+# Etapa 3 - Runtime final
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
 EXPOSE 5000
-
-ENV ASPNETCORE_URLS=http://+:5000
-ENV ASPNETCORE_ENVIRONMENT=Production
-ENV PORT=5000
 
 ENTRYPOINT ["dotnet", "FiapProjetoGames.API.dll"]
