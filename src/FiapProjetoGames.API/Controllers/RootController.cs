@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace FiapProjetoGames.API.Controllers
 {
@@ -7,43 +6,42 @@ namespace FiapProjetoGames.API.Controllers
     [Route("")]
     public class RootController : ControllerBase
     {
-        private readonly ILogger<RootController> _logger;
-
-        public RootController(ILogger<RootController> logger)
-        {
-            _logger = logger;
-        }
-
         [HttpGet]
         public IActionResult Get()
         {
-            _logger.LogInformation("Acesso à raiz da API");
-            
             return Ok(new
             {
-                message = "FIAP Projeto Games API está funcionando!",
-                version = "2.0.0",
+                message = "FIAP Projeto Games API funcionando!",
                 timestamp = DateTime.UtcNow,
-                endpoints = new
+                environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Unknown",
+                database = "In-Memory",
+                version = "1.0.0",
+                endpoints = new[]
                 {
-                    health = "/health",
-                    swagger = "/swagger",
-                    usuarios = "/api/usuarios",
-                    jogos = "/api/jogos",
-                    biblioteca = "/api/biblioteca",
-                    metrics = "/api/metrics"
+                    "/health",
+                    "/debug",
+                    "/api/usuarios/cadastro",
+                    "/api/usuarios/login",
+                    "/api/jogos",
+                    "/api/biblioteca"
                 }
             });
         }
 
-        [HttpGet("test")]
-        public IActionResult Test()
+        [HttpGet("ping")]
+        public IActionResult Ping()
+        {
+            return Ok("pong");
+        }
+
+        [HttpGet("status")]
+        public IActionResult Status()
         {
             return Ok(new
             {
-                message = "Teste de conectividade",
-                status = "OK",
-                timestamp = DateTime.UtcNow
+                status = "running",
+                timestamp = DateTime.UtcNow,
+                uptime = Environment.TickCount64
             });
         }
     }
