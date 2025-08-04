@@ -22,7 +22,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 
 # Copia do publish
-COPY --from=publish /app/publish .
+COPY --from=build /app/publish .
 
 # Expõe porta
 EXPOSE 5000
