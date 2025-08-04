@@ -25,9 +25,6 @@ RUN dotnet publish "FiapProjetoGames.API.csproj" -c Release -o /app/publish /p:U
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 
-# Create logs directory
-RUN mkdir -p /app/logs
-
 # Copy published application
 COPY --from=publish /app/publish .
 
@@ -37,10 +34,7 @@ EXPOSE 8080
 # Set environment variables
 ENV ASPNETCORE_URLS=http://+:8080
 ENV ASPNETCORE_ENVIRONMENT=Production
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:8080/health || exit 1
+ENV PORT=8080
 
 # Start the application
 ENTRYPOINT ["dotnet", "FiapProjetoGames.API.dll"] 
