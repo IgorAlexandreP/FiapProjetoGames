@@ -19,6 +19,7 @@ RUN dotnet build "FiapProjetoGames.API.csproj" -c Release -o /app/build
 
 # Publish the application
 FROM build AS publish
+WORKDIR "/src/src/FiapProjetoGames.API"
 RUN dotnet publish "FiapProjetoGames.API.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 # Build runtime image
