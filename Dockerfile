@@ -28,13 +28,13 @@ WORKDIR /app
 # Copy published application
 COPY --from=publish /app/publish .
 
-# Expose port 8080 for Railway
-EXPOSE 8080
+# Expose port 5000 for Railway
+EXPOSE 5000
 
 # Set environment variables
-ENV ASPNETCORE_URLS=http://+:8080
+ENV ASPNETCORE_URLS=http://+:5000
 ENV ASPNETCORE_ENVIRONMENT=Production
-ENV PORT=8080
+ENV PORT=5000
 
 # Start the application
 ENTRYPOINT ["dotnet", "FiapProjetoGames.API.dll"] 

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FiapProjetoGames.API.Controllers
 {
     [ApiController]
-    [Route("api/test")]
+    [Route("api/[controller]")]
     public class TestController : ControllerBase
     {
         [HttpGet]
@@ -11,9 +11,10 @@ namespace FiapProjetoGames.API.Controllers
         {
             return Ok(new
             {
-                message = "Test endpoint working!",
+                message = "API funcionando!",
                 timestamp = DateTime.UtcNow,
-                environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Unknown"
+                environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Unknown",
+                database = "In-Memory"
             });
         }
 
@@ -21,6 +22,12 @@ namespace FiapProjetoGames.API.Controllers
         public IActionResult Ping()
         {
             return Ok("pong");
+        }
+
+        [HttpGet("simple")]
+        public IActionResult Simple()
+        {
+            return Ok("API funcionando!");
         }
     }
 } 

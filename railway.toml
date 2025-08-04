@@ -1,13 +1,5 @@
 [build]
 builder = "dockerfile"
-dockerfilePath = "Dockerfile"
 
 [deploy]
-startCommand = "dotnet FiapProjetoGames.API.dll"
-healthcheckPath = "/health"
-healthcheckTimeout = 300
-restartPolicyType = "on_failure"
-restartPolicyMaxRetries = 10
-
-[[services]]
-name = "api" 
+startCommand = "dotnet FiapProjetoGames.API.dll" 
