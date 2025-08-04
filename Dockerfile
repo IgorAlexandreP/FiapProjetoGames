@@ -24,8 +24,11 @@ WORKDIR /app
 # Copia do publish
 COPY --from=build /app/publish .
 
+# Bind dinâmico (Railway injeta PORT, e ASP.NET costuma respeitar ASPNETCORE_URLS se definido externamente)
+ENV ASPNETCORE_URLS=http://+:8080
+
 # Expõe porta
-EXPOSE 5000
+EXPOSE 8080
 
 # Entrypoint
 ENTRYPOINT ["dotnet", "FiapProjetoGames.API.dll"]

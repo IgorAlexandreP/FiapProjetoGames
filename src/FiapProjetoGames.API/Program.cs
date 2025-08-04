@@ -12,6 +12,7 @@ using FluentValidation;
 using FiapProjetoGames.Application.Validation;
 using FiapProjetoGames.Application.DTOs;
 using FiapProjetoGames.API.Services;
+using Microsoft.AspNetCore.Routing;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -100,6 +101,13 @@ builder.Services.AddScoped<DatabaseInitializationService>();
 
 var app = builder.Build();
 
+// Log de todas as requisições recebidas
+app.Use(async (context, next) =>
+{
+    Console.WriteLine($"[REQ] {context.Request.Method} {context.Request.Path}");
+    await next();
+});
+
 // Configure the HTTP request pipeline.
 app.UseSwagger();
 app.UseSwaggerUI(c =>
@@ -120,6 +128,13 @@ app.MapHealthChecks("/health");
 
 // Map Controllers
 app.MapControllers();
+
+// Log de endpoints registrados
+var dataSource = app.Services.GetRequiredService<EndpointDataSource>();
+foreach (var endpoint in dataSource.Endpoints)
+{
+    Console.WriteLine("Endpoint registrado: " + endpoint.DisplayName);
+}
 
 // Initialize database - Simplificado
 using (var scope = app.Services.CreateScope())

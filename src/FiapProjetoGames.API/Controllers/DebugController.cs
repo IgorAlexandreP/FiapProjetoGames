@@ -1,40 +1,30 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace FiapProjetoGames.API.Controllers
+namespace FiapProjetoGames.API.Controllers;
+
+[ApiController]
+[Route("debug")]
+public class DebugController : ControllerBase
 {
-    [ApiController]
-    [Route("debug")]
-    public class DebugController : ControllerBase
+    [HttpGet("info")]
+    public IActionResult Info()
     {
-        [HttpGet]
-        public IActionResult Get()
-        {
-            return Ok(new
-            {
-                message = "Debug endpoint funcionando!",
-                timestamp = DateTime.UtcNow,
-                environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Unknown",
-                database = "In-Memory"
-            });
-        }
+        var assemblies = AppDomain.CurrentDomain.GetAssemblies()
+            .Select(a => a.GetName().Name)
+            .OrderBy(n => n)
+            .ToArray();
+        
+        return Ok(new { 
+            Assemblies = assemblies,
+            Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Not set",
+            Port = Environment.GetEnvironmentVariable("PORT") ?? "Not set",
+            Urls = Environment.GetEnvironmentVariable("ASPNETCORE_URLS") ?? "Not set"
+        });
+    }
 
-        [HttpGet("ping")]
-        public IActionResult Ping()
-        {
-            return Ok("pong");
-        }
-
-        [HttpGet("info")]
-        public IActionResult Info()
-        {
-            return Ok(new
-            {
-                message = "API funcionando!",
-                timestamp = DateTime.UtcNow,
-                environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Unknown",
-                database = "In-Memory",
-                version = "1.0.0"
-            });
-        }
+    [HttpGet("test")]
+    public IActionResult Test()
+    {
+        return Ok("Debug controller funcionando!");
     }
 } 
