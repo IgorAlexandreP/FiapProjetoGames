@@ -106,34 +106,10 @@ try
         });
     });
 
-    // Configure DbContext - Usando MySQL real do Railway
-    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
-    var dbName = Environment.GetEnvironmentVariable("DB_NAME");
-    var dbUser = Environment.GetEnvironmentVariable("DB_USER");
-    var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
-    var dbPort = Environment.GetEnvironmentVariable("DB_PORT");
-    
-    // Construir connection string manualmente
-    if (!string.IsNullOrEmpty(dbHost) && !string.IsNullOrEmpty(dbPassword))
-    {
-        connectionString = $"Server={dbHost};Port={dbPort};Database={dbName};User Id={dbUser};Password={dbPassword};";
-        Log.Information("Using MySQL connection string: {ConnectionString}", connectionString.Replace(dbPassword, "***"));
-        
-        builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseMySql(connectionString, 
-                ServerVersion.AutoDetect(connectionString),
-                mySqlOptions => mySqlOptions.EnableRetryOnFailure(
-                    maxRetryCount: 5,
-                    maxRetryDelay: TimeSpan.FromSeconds(30),
-                    errorNumbersToAdd: null)));
-    }
-    else
-    {
-        Log.Warning("MySQL connection not available, using in-memory database");
-        builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseInMemoryDatabase("RailwayDatabase"));
-    }
+    // Configure DbContext - Usando in-memory temporariamente para garantir funcionamento
+    Log.Information("Using in-memory database for Railway deployment");
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseInMemoryDatabase("RailwayDatabase"));
 
     // Configure JWT Authentication
     var jwtSecret = builder.Configuration["JwtSettings:Secret"] ?? 
