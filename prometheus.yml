@@ -1,0 +1,32 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: 'fiap-projeto-games'
+
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+    static_configs:
+      - targets: ['localhost:8080']
+
+    # Scrape the API metrics endpoint
+    metrics_path: '/api/metrics'
+    
+    # Add custom labels
+    static_configs:
+      - targets: ['fiapprojetogames-production.up.railway.app']
+        labels:
+          service: 'fiap-projeto-games'
+          environment: 'production'
+          version: '1.0.0'
+
+  # Self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090'] 

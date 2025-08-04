@@ -44,12 +44,46 @@ Nossa missão? Criar uma base sólida que não só atenda às necessidades atuai
 - **Testes Unitários**: Garantia de qualidade do código
 - **Middleware de Tratamento de Erros**: Respostas padronizadas e logs estruturados
 
+## CI/CD e Deploy
+
+### Pipeline Automatizado
+- **GitHub Actions**: Pipeline CI/CD completo
+- **Build Automático**: Testes e build em cada PR
+- **Deploy Automático**: Deploy na main para Railway
+- **Docker Hub**: Imagem publicada automaticamente
+
+### Secrets Necessários
+Configure no GitHub Secrets:
+- `DOCKERHUB_USERNAME`: Seu usuário do Docker Hub
+- `DOCKERHUB_TOKEN`: Token de acesso do Docker Hub
+- `RAILWAY_TOKEN`: Token do Railway
+- `RAILWAY_SERVICE`: Nome do serviço no Railway
+
+## Monitoramento
+
+### Stack de Monitoramento
+- **Prometheus**: Coleta de métricas
+- **Grafana**: Visualização e dashboards
+- **Métricas Customizadas**: Endpoints específicos da aplicação
+
+### Setup Local
+```bash
+# Executar com monitoramento completo
+docker-compose up -d
+
+# Acessos:
+# API: http://localhost:8080
+# Prometheus: http://localhost:9090
+# Grafana: http://localhost:3000 (admin/admin)
+```
+
 ## Como Começar
 
 ### Pré-requisitos
 - .NET 8 SDK
 - SQL Server (LocalDB ou instância completa)
 - Sua IDE favorita (recomendamos Visual Studio 2022 ou VS Code)
+- Docker (para monitoramento completo)
 
 ### Configuração em 4 Passos
 
@@ -107,6 +141,11 @@ GET /health/ready - Verificação de prontidão
 GET /health/live - Verificação de vida
 ```
 
+#### Monitoramento
+```
+GET /api/metrics - Métricas Prometheus
+```
+
 #### Documentação da API
 ```
 GET /swagger - Documentação interativa da API
@@ -129,7 +168,25 @@ src/
 ├── FiapProjetoGames.Domain/        # Camada de domínio
 ├── FiapProjetoGames.Infrastructure/# Camada de infraestrutura
 └── FiapProjetoGames.Tests/         # Testes unitários
+
+grafana/                            # Configurações do Grafana
+├── dashboards/                     # Dashboards
+└── datasources/                    # Data sources
+
+.github/workflows/                  # CI/CD Pipeline
 ```
+
+## Deploy em Produção
+
+### Railway (Atual)
+- **URL**: https://fiapprojetogames-production.up.railway.app
+- **Deploy Automático**: Via GitHub Actions
+- **Monitoramento**: Métricas disponíveis em `/api/metrics`
+
+### Docker Hub
+- **Imagem**: `[seu-usuario]/fiapprojetogames:latest`
+- **Build Automático**: A cada merge na main
+- **Tags**: Versões automáticas por commit
 
 ## Contato
 
