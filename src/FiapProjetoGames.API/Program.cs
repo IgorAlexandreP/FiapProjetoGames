@@ -92,6 +92,9 @@ builder.Services.AddScoped<IBibliotecaJogoService, BibliotecaJogoService>();
 builder.Services.AddScoped<IValidator<CadastroUsuarioDto>, CadastroUsuarioValidation>();
 builder.Services.AddScoped<IValidator<LoginUsuarioDto>, LoginUsuarioValidation>();
 
+// Configure Memory Cache
+builder.Services.AddMemoryCache();
+
 // Register Database Initialization Service
 builder.Services.AddScoped<DatabaseInitializationService>();
 
