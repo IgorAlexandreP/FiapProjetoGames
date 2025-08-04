@@ -1,15 +1,13 @@
 [build]
-builder = "DOCKERFILE"
+builder = "dockerfile"
 dockerfilePath = "Dockerfile"
 
 [deploy]
 startCommand = "dotnet FiapProjetoGames.API.dll"
 healthcheckPath = "/health"
 healthcheckTimeout = 300
-restartPolicyType = "ON_FAILURE"
+restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 10
 
-[environments.production]
-ASPNETCORE_ENVIRONMENT = "Production"
-ASPNETCORE_URLS = "http://+:8080"
-PORT = "8080" 
+[[services]]
+name = "api" 
