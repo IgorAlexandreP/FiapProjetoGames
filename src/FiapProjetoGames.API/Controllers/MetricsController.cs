@@ -29,6 +29,34 @@ namespace FiapProjetoGames.API.Controllers
         }
 
         /// <summary>
+        /// Informações sobre o monitoramento da aplicação
+        /// </summary>
+        /// <returns>Links e informações de monitoramento</returns>
+        [HttpGet("info")]
+        public IActionResult GetMonitoringInfo()
+        {
+            var baseUrl = $"{Request.Scheme}://{Request.Host}";
+            var monitoringInfo = new
+            {
+                message = "Sistema de monitoramento disponível",
+                endpoints = new
+                {
+                    metrics = $"{baseUrl}/api/metrics",
+                    health = $"{baseUrl}/health",
+                    grafana_local = "http://localhost:3000 (apenas localmente)",
+                    prometheus_local = "http://localhost:9090 (apenas localmente)"
+                },
+                instructions = new
+                {
+                    local_setup = "Execute 'docker-compose up -d' para monitoramento completo local",
+                    railway_note = "No Railway, apenas as métricas da API estão disponíveis via /api/metrics"
+                }
+            };
+            
+            return Ok(monitoringInfo);
+        }
+
+        /// <summary>
         /// Incrementa um contador de métrica
         /// </summary>
         /// <param name="metricName">Nome da métrica</param>
