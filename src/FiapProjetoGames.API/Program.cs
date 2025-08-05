@@ -73,7 +73,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseInMemoryDatabase("RailwayDatabase"));
 
 // Configure JWT Authentication - Simplificado
-var jwtSecret = Environment.GetEnvironmentVariable("JWT_SECRET") ?? "default-secret-key";
+var jwtSecret = Environment.GetEnvironmentVariable("JWT_SECRET") ?? "fiap-projeto-games-super-secret-key-2024-with-256-bits-minimum-security";
 var key = Encoding.ASCII.GetBytes(jwtSecret);
 
 builder.Services.AddAuthentication(x =>
@@ -118,6 +118,8 @@ builder.Services.AddScoped<IBibliotecaJogoService, BibliotecaJogoService>();
 builder.Services.AddScoped<IValidator<CadastroUsuarioDto>, CadastroUsuarioValidation>();
 builder.Services.AddScoped<IValidator<LoginUsuarioDto>, LoginUsuarioValidation>();
 
+
+
 // Configure Memory Cache
 builder.Services.AddMemoryCache();
 
@@ -136,6 +138,12 @@ app.UseSwaggerUI(c =>
 
 // Configure CORS
 app.UseCors("AllowAll");
+
+// Global Error Handling
+app.UseMiddleware<FiapProjetoGames.API.Middleware.ErrorHandlingMiddleware>();
+
+// Metrics Middleware
+app.UseMiddleware<FiapProjetoGames.API.Middleware.MetricsMiddleware>();
 
 // Authentication & Authorization
 app.UseAuthentication();

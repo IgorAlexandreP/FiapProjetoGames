@@ -14,42 +14,80 @@ namespace FiapProjetoGames.API.Controllers
     {
         private readonly IUsuarioService _usuarioService;
         private readonly ILogService _logService;
+        private readonly IMetricsService _metricsService;
 
-        public UsuariosController(IUsuarioService usuarioService, ILogService logService)
+        public UsuariosController(IUsuarioService usuarioService, ILogService logService, IMetricsService metricsService)
         {
             _usuarioService = usuarioService;
             _logService = logService;
+            _metricsService = metricsService;
         }
 
         [HttpPost("cadastro")]
-        public async Task<ActionResult<UsuarioDto>> Cadastrar(CadastroUsuarioDto cadastroUsuarioDto)
+        public async Task<ActionResult<ApiResponseDto<UsuarioDto>>> Cadastrar(CadastroUsuarioDto cadastroUsuarioDto)
         {
+            var startTime = DateTime.UtcNow;
             try
             {
                 var usuario = await _usuarioService.CadastrarAsync(cadastroUsuarioDto);
                 await _logService.LogInfoAsync("Usuário cadastrado com sucesso", new { Email = usuario.Email, Id = usuario.Id });
-                return Ok(usuario);
+                
+                // Registrar métricas de sucesso
+                await _metricsService.IncrementCounterAsync("user_registration", "success");
+                await _metricsService.RecordTimingAsync("user_registration_time", DateTime.UtcNow - startTime);
+                
+                return Ok(new ApiResponseDto<UsuarioDto>
+                {
+                    Success = true,
+                    Message = "Usuário cadastrado com sucesso!",
+                    Data = usuario
+                });
+            }
+            catch (InvalidOperationException ex)
+            {
+                await _logService.LogErrorAsync("Erro ao cadastrar usuário", ex, cadastroUsuarioDto);
+                await _metricsService.IncrementCounterAsync("user_registration", "error");
+                throw; // Deixar o middleware tratar
             }
             catch (Exception ex)
             {
-                await _logService.LogErrorAsync("Erro ao cadastrar usuário", ex, cadastroUsuarioDto);
-                throw;
+                await _logService.LogErrorAsync("Erro inesperado ao cadastrar usuário", ex, cadastroUsuarioDto);
+                await _metricsService.IncrementCounterAsync("user_registration", "error");
+                throw; // Deixar o middleware tratar
             }
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<UsuarioDto>> Login(LoginUsuarioDto loginUsuarioDto)
+        public async Task<ActionResult<ApiResponseDto<UsuarioDto>>> Login(LoginUsuarioDto loginUsuarioDto)
         {
+            var startTime = DateTime.UtcNow;
             try
             {
                 var usuario = await _usuarioService.LoginAsync(loginUsuarioDto);
                 await _logService.LogSecurityAsync("Login realizado com sucesso", new { Email = usuario.Email, Id = usuario.Id });
-                return Ok(usuario);
+                
+                // Registrar métricas de sucesso
+                await _metricsService.IncrementCounterAsync("user_login", "success");
+                await _metricsService.RecordTimingAsync("user_login_time", DateTime.UtcNow - startTime);
+                
+                return Ok(new ApiResponseDto<UsuarioDto>
+                {
+                    Success = true,
+                    Message = "Login realizado com sucesso!",
+                    Data = usuario
+                });
+            }
+            catch (InvalidOperationException ex)
+            {
+                await _logService.LogSecurityAsync("Tentativa de login falhou", new { Email = loginUsuarioDto.Email, Error = ex.Message });
+                await _metricsService.IncrementCounterAsync("user_login", "error");
+                throw; // Deixar o middleware tratar
             }
             catch (Exception ex)
             {
-                await _logService.LogSecurityAsync("Tentativa de login falhou", new { Email = loginUsuarioDto.Email, Error = ex.Message });
-                throw;
+                await _logService.LogSecurityAsync("Erro inesperado no login", new { Email = loginUsuarioDto.Email, Error = ex.Message });
+                await _metricsService.IncrementCounterAsync("user_login", "error");
+                throw; // Deixar o middleware tratar
             }
         }
 

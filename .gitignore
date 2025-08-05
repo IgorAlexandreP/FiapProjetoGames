@@ -7,6 +7,9 @@ appsettings.Local.json
 # Documentação Markdown (excluir do commit)
 *.md
 
+# Dashboard personalizado do Grafana (não commitar)
+grafana/dashboards/fiap-games-dashboard.json
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/

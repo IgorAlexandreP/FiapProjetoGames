@@ -377,25 +377,32 @@ namespace FiapProjetoGames.Application.Services
         private string GerarToken(Usuario usuario)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_jwtSecret);
-            var tokenDescriptor = new SecurityTokenDescriptor
+            
+            // Criar uma chave de 32 bytes (256 bits) usando SHA256 da chave secreta
+            using (var sha256 = System.Security.Cryptography.SHA256.Create())
             {
-                Subject = new ClaimsIdentity(new[]
+                var keyBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(_jwtSecret));
+                var key = new SymmetricSecurityKey(keyBytes);
+                
+                var tokenDescriptor = new SecurityTokenDescriptor
                 {
-                    new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
-                    new Claim(ClaimTypes.Email, usuario.Email),
-                    new Claim(ClaimTypes.Role, usuario.IsAdmin ? "Admin" : "User"),
-                    new Claim("name", usuario.Nome),
-                    new Claim("email", usuario.Email)
-                }),
-                Issuer = _jwtIssuer,
-                Audience = _jwtAudience,
-                Expires = DateTime.UtcNow.AddHours(_jwtExpirationHours),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
+                    Subject = new ClaimsIdentity(new[]
+                    {
+                        new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
+                        new Claim(ClaimTypes.Email, usuario.Email),
+                        new Claim(ClaimTypes.Role, usuario.IsAdmin ? "Admin" : "User"),
+                        new Claim("name", usuario.Nome),
+                        new Claim("email", usuario.Email)
+                    }),
+                    Issuer = _jwtIssuer,
+                    Audience = _jwtAudience,
+                    Expires = DateTime.UtcNow.AddHours(_jwtExpirationHours),
+                    SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature)
+                };
 
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                return tokenHandler.WriteToken(token);
+            }
         }
     }
 } 

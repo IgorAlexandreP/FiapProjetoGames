@@ -7,7 +7,6 @@ namespace FiapProjetoGames.API.Controllers
 {
     [ApiController]
     [Route("api/metrics")]
-    [Authorize(Roles = "Admin")]
     public class MetricsController : ControllerBase
     {
         private readonly IMetricsService _metricsService;
@@ -18,10 +17,11 @@ namespace FiapProjetoGames.API.Controllers
         }
 
         /// <summary>
-        /// Obtém as métricas da aplicação em formato Prometheus
+        /// Obtém as métricas da aplicação em formato Prometheus (público)
         /// </summary>
         /// <returns>Métricas em formato Prometheus</returns>
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetMetrics()
         {
             var metrics = await _metricsService.GetMetricsAsync();
@@ -33,6 +33,7 @@ namespace FiapProjetoGames.API.Controllers
         /// </summary>
         /// <returns>Links e informações de monitoramento</returns>
         [HttpGet("info")]
+        [AllowAnonymous]
         public IActionResult GetMonitoringInfo()
         {
             var baseUrl = $"{Request.Scheme}://{Request.Host}";
@@ -57,12 +58,13 @@ namespace FiapProjetoGames.API.Controllers
         }
 
         /// <summary>
-        /// Incrementa um contador de métrica
+        /// Incrementa um contador de métrica (requer Admin)
         /// </summary>
         /// <param name="metricName">Nome da métrica</param>
         /// <param name="label">Label opcional</param>
         /// <returns>Confirmação da operação</returns>
         [HttpPost("counter/{metricName}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> IncrementCounter(string metricName, [FromQuery] string? label = null)
         {
             await _metricsService.IncrementCounterAsync(metricName, label);
@@ -70,13 +72,14 @@ namespace FiapProjetoGames.API.Controllers
         }
 
         /// <summary>
-        /// Registra um valor de histograma
+        /// Registra um valor de histograma (requer Admin)
         /// </summary>
         /// <param name="metricName">Nome da métrica</param>
         /// <param name="value">Valor a ser registrado</param>
         /// <param name="label">Label opcional</param>
         /// <returns>Confirmação da operação</returns>
         [HttpPost("histogram/{metricName}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> RecordHistogram(string metricName, [FromQuery] double value, [FromQuery] string? label = null)
         {
             await _metricsService.RecordHistogramAsync(metricName, value, label);
@@ -84,13 +87,14 @@ namespace FiapProjetoGames.API.Controllers
         }
 
         /// <summary>
-        /// Registra um valor de gauge
+        /// Registra um valor de gauge (requer Admin)
         /// </summary>
         /// <param name="metricName">Nome da métrica</param>
         /// <param name="value">Valor a ser registrado</param>
         /// <param name="label">Label opcional</param>
         /// <returns>Confirmação da operação</returns>
         [HttpPost("gauge/{metricName}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> RecordGauge(string metricName, [FromQuery] double value, [FromQuery] string? label = null)
         {
             await _metricsService.RecordGaugeAsync(metricName, value, label);

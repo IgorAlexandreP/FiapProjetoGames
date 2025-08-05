@@ -12,14 +12,15 @@ scrape_configs:
 
     # metrics_path defaults to '/metrics'
     # scheme defaults to 'http'.
-    static_configs:
-      - targets: ['localhost:8080']
-
-    # Scrape the API metrics endpoint
     metrics_path: '/api/metrics'
     
     # Add custom labels
     static_configs:
+      - targets: ['api:8080']
+        labels:
+          service: 'fiap-projeto-games'
+          environment: 'local'
+          version: '1.0.0'
       - targets: ['fiapprojetogames-production.up.railway.app']
         labels:
           service: 'fiap-projeto-games'
