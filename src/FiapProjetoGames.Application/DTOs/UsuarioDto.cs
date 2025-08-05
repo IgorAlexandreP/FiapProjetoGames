@@ -13,7 +13,7 @@ namespace FiapProjetoGames.Application.DTOs
         public DateTime? DataAtualizacao { get; set; }
         public bool Ativo { get; set; }
     }
-
+    //teste
     public class AtualizacaoUsuarioDto
     {
         public string Nome { get; set; } = string.Empty;
