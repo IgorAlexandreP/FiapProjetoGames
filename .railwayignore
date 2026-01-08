@@ -1,0 +1,26 @@
+# Ignorar arquivos desnecessários
+*.md
+.git/
+.gitignore
+README.md
+docker-compose.yml
+prometheus.yml
+scripts/
+teste-docker-cicd.sh
+test-railway.*
+check-railway-status.ps1
+railway-env-vars.txt
+
+# Ignorar logs e arquivos temporários
+logs/
+*.log
+*.tmp
+*.temp
+
+# Ignorar arquivos de desenvolvimento
+.vscode/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates 

@@ -1,0 +1,89 @@
+# Arquivos de desenvolvimento
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Arquivos de build
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+msbuild.log
+msbuild.err
+msbuild.wrn
+
+# Arquivos de teste
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# Arquivos temporários
+*.tmp
+*.temp
+*.log
+*.pid
+*.seed
+*.pid.lock
+
+# Arquivos de cobertura
+*.coverage
+*.coveragexml
+coverage/
+
+# Arquivos de documentação
+*.md
+!README.md
+Documentação/
+
+# Arquivos de configuração local
+appsettings.Development.json
+appsettings.Local.json
+appsettings.Production.json
+
+# Arquivos de banco de dados
+*.mdf
+*.ldf
+*.ndf
+
+# Arquivos de backup
+*.bak
+*.backup
+
+# Arquivos de cache
+.nuget/
+packages/
+node_modules/
+
+# Arquivos do Git
+.git/
+.gitignore
+.gitattributes
+
+# Arquivos do Docker
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# Arquivos de CI/CD
+.github/
+.gitlab-ci.yml
+azure-pipelines.yml
+
+# Arquivos de IDE
+.idea/
+*.swp
+*.swo
+*~
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db 
