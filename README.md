@@ -1,234 +1,98 @@
-## Fase 4: Microsserviços e Kubernetes (Atual)
+# FIAP Challenge Games (FCG)
 
-Nesta fase, a aplicação evoluiu para uma arquitetura de microsserviços distribuídos, focada em escalabilidade e resiliência.
+Bem-vindo ao **FCG**! Esta é uma iniciativa inovadora da FIAP para revolucionar a educação em tecnologia através dos games. O projeto consiste em uma plataforma completa para gerenciamento e consumo de jogos, desenvolvida com uma arquitetura moderna, distribuída e resiliente.
 
-### Novas Funcionalidades
-- **Arquitetura de Microsserviços**: Separação de responsabilidades entre API e Workers.
-- **Comunicação Assíncrona**: Uso de **RabbitMQ** e **MassTransit** para processamento de eventos em background.
-- **Worker Service**: Novo serviço dedicado ao processamento de pagamentos (`ProjetoFiap.Worker`).
-- **Orquestração com Kubernetes**: Manifestos completos para deploy em cluster K8s (Deployment, Service, ConfigMap, Secret, HPA).
-- **Horizontal Pod Autoscaler (HPA)**: Escalabilidade automática baseada em uso de CPU.
-- **Docker Otimizado**: Migração para imagens **Alpine Linux** (menores e mais seguras).
-- **Monitoramento Avançado**: Métricas via **OpenTelemetry** e **Prometheus** (`/metrics`), além de Health Checks (`/health`).
-
-### Como Rodar (Fase 4)
-```bash
-# Subir todo o ambiente (API + Worker + RabbitMQ)
-docker-compose up -d --build
-
-# Acessar documentação
-http://localhost:8080/swagger
-
-# Verificar métricas
-http://localhost:8080/metrics
-```
-
-### Estrutura Atualizada
-```
-ProjetoFiap/
-├── ProjetoFiap.API/          # API Principal (Producer)
-├── ProjetoFiap.Worker/       # Worker Service (Consumer)
-├── k8s/                      # Manifestos Kubernetes
-├── docker-compose.yml        # Orquestração Local
-└── ...
-```
+Nossa missão é criar uma base sólida que não só atenda às necessidades educacionais atuais, mas que sirva como referência técnica para implementações de Microsserviços, DevOps e Observabilidade.
 
 ---
 
-# FIAP Challenge Games (FCG) - Histórico
+## 🚀 Funcionalidades e Arquitetura
 
-## Sobre o Projeto
-
-Bem-vindo ao FCG - uma iniciativa inovadora da FIAP para revolucionar a educação em tecnologia através dos games! Este é o MVP da primeira fase do projeto, onde desenvolvemos uma API REST em .NET 8 que servirá como base para uma plataforma educacional de jogos.
-
-Nossa missão? Criar uma base sólida que não só atenda às necessidades atuais dos alunos FIAP, Alura e PM3, mas que também esteja preparada para evoluir com recursos incríveis como matchmaking e gerenciamento de servidores nas próximas fases.
-
-## Principais Funcionalidades
+O sistema evoluiu de um MVP monolítico para uma **Arquitetura de Microsserviços** orientada a eventos, garantindo alta escalabilidade e desacoplamento.
 
 ### Para os Usuários
-- **Cadastro Simplificado e Seguro**
-  - Nome, e-mail e senha
-  - Validação rigorosa de e-mail
-  - Senha forte obrigatória (mínimo 8 caracteres, com números, letras e caracteres especiais)
-  - Sua biblioteca pessoal de jogos
+- **Experiência Fluida**: Navegação rápida e responsiva.
+- **Segurança**: Cadastro com validação rigorosa e autenticação via JWT.
+- **Pagamentos Ágeis**: Sistema de checkout assíncrono que não trava a navegação.
+- **Biblioteca Pessoal**: Gerencie sua coleção de jogos favoritos.
 
-### Para Administradores
-- Gestão completa de jogos
-- Administração de usuários
-- Controle total da plataforma
-
-### Gestão de Jogos
-- Cadastro e manutenção do catálogo
-- Biblioteca pessoal para cada usuário
-- Sistema de propriedade de jogos
-
-## Tecnologias e Práticas
-
-### Base Tecnológica
-- **.NET 8**: Última versão do framework, garantindo performance e recursos modernos
-- **Entity Framework Core**: ORM robusto para persistência de dados
-- **SQL Server**: Banco de dados confiável e escalável
-- **JWT**: Autenticação segura e stateless
-- **Swagger**: Documentação clara e interativa da API
-
-### Arquitetura e Qualidade
-- **Arquitetura Monolítica**: Escolhida estrategicamente para o MVP, facilitando o desenvolvimento ágil
-- **Domain-Driven Design (DDD)**: Organização do código em camadas bem definidas
-  - Domain: Coração do negócio
-  - Application: Orquestração dos casos de uso
-  - Infrastructure: Persistência e serviços externos
-  - API: Interface com o mundo exterior
-- **Testes Unitários**: Garantia de qualidade do código
-- **Middleware de Tratamento de Erros**: Respostas padronizadas e logs estruturados
-
-## CI/CD e Deploy
-
-### Pipeline Automatizado
-- **GitHub Actions**: Pipeline CI/CD completo
-- **Build Automático**: Testes e build em cada PR
-- **Deploy Automático**: Deploy na main para Railway
-- **Docker Hub**: Imagem publicada automaticamente
-
-### Secrets Necessários
-Configure no GitHub Secrets:
-- `DOCKERHUB_USERNAME`: Seu usuário do Docker Hub
-- `DOCKERHUB_TOKEN`: Token de acesso do Docker Hub
-- `RAILWAY_TOKEN`: Token do Railway
-- `RAILWAY_SERVICE`: Nome do serviço no Railway
-
-## Monitoramento
-
-### Stack de Monitoramento
-- **Prometheus**: Coleta de métricas
-- **Grafana**: Visualização e dashboards
-- **Métricas Customizadas**: Endpoints específicos da aplicação
-
-### Setup Local
-```bash
-# Executar com monitoramento completo
-docker-compose up -d
-
-# Acessos:
-# API: http://localhost:8080
-# Prometheus: http://localhost:9090
-# Grafana: http://localhost:3000 (admin/admin)
-```
-
-## Como Começar
-
-### Pré-requisitos
-- .NET 8 SDK
-- SQL Server (LocalDB ou instância completa)
-- Sua IDE favorita (recomendamos Visual Studio 2022 ou VS Code)
-- Docker (para monitoramento completo)
-
-### Configuração em 4 Passos
-
-1. **Clone o Repositório**
-```bash
-git clone [url-do-repositorio]
-cd [nome-do-diretorio]
-```
-
-2. **Restaure os Pacotes**
-```bash
-dotnet restore
-```
-
-3. **Configure o Banco de Dados**
-Ajuste o `appsettings.json`:
-```json
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=FiapProjetoGames;Trusted_Connection=True"
-  }
-}
-```
-
-4. **Prepare o Banco de Dados**
-```bash
-cd src/FiapProjetoGames.API
-dotnet ef database update
-```
-
-5. **Execute a Aplicação**
-```bash
-dotnet run
-```
-
-### Endpoints Principais
-
-#### Autenticação
-```
-POST /api/usuarios/cadastro - Crie sua conta
-POST /api/usuarios/login - Acesse a plataforma
-```
-
-#### Gestão de Jogos
-```
-GET /api/jogos - Explore o catálogo
-POST /api/jogos - Adicione novos jogos (Admin)
-GET /api/biblioteca - Sua coleção pessoal
-```
-
-#### Health Checks
-```
-GET /health - Status geral da aplicação
-GET /health/ready - Verificação de prontidão
-GET /health/live - Verificação de vida
-```
-
-#### Monitoramento
-```
-GET /api/metrics - Métricas Prometheus
-```
-
-#### Documentação da API
-```
-GET /swagger - Documentação interativa da API
-```
-
-## Segurança
-
-Levamos a segurança a sério! Implementamos:
-- Autenticação via JWT
-- Hash seguro de senhas com BCrypt
-- Autorização baseada em roles
-- Validação de propriedade de jogos
-
-## Estrutura do Projeto
-
-```
-src/
-├── FiapProjetoGames.API/          # Camada de apresentação
-├── FiapProjetoGames.Application/   # Camada de aplicação
-├── FiapProjetoGames.Domain/        # Camada de domínio
-├── FiapProjetoGames.Infrastructure/# Camada de infraestrutura
-└── FiapProjetoGames.Tests/         # Testes unitários
-
-grafana/                            # Configurações do Grafana
-├── dashboards/                     # Dashboards
-└── datasources/                    # Data sources
-
-.github/workflows/                  # CI/CD Pipeline
-```
-
-## Deploy em Produção
-
-### Railway (Atual)
-- **URL**: https://fiapprojetogames-production.up.railway.app
-- **Deploy Automático**: Via GitHub Actions
-- **Monitoramento**: Métricas disponíveis em `/api/metrics`
-
-### Docker Hub
-- **Imagem**: `[seu-usuario]/fiapprojetogames:latest`
-- **Build Automático**: A cada merge na main
-- **Tags**: Versões automáticas por commit
-
-## Contato
-
-E-mail: irgopk13@gmail.com
+### Destaques Técnicos (O que roda por trás dos panos)
+- **Microsserviços**: Separação clara de responsabilidades.
+  - **API Principal**: Gerencia usuários, catálogo e recebe requisições.
+  - **Worker Service**: Processa tarefas pesadas (como pagamentos) em segundo plano.
+- **Comunicação Assíncrona**: Uso de **RabbitMQ** e **MassTransit** para garantir que o sistema continue funcionando mesmo sob alta carga.
+- **Resiliência**: Se um serviço cair, as mensagens ficam salvas na fila para processamento posterior.
+- **Performance**: Imagens Docker otimizadas com **Alpine Linux** (leves e seguras).
 
 ---
 
-Desenvolvido com ❤️ por Igor Alexandre 
+## 🛠️ Tecnologias Utilizadas
+
+- **.NET 9**: Framework de alta performance.
+- **RabbitMQ**: Message Broker para comunicação entre serviços.
+- **SQL Server**: Banco de dados relacional robusto.
+- **Kubernetes (K8s)**: Orquestração de containers com auto-scaling (HPA).
+- **Docker**: Containerização completa da aplicação.
+- **OpenTelemetry & Prometheus**: Monitoramento de métricas em tempo real.
+- **Swagger**: Documentação interativa da API.
+
+---
+
+## 📦 Como Rodar o Projeto
+
+A maneira mais simples de ver tudo funcionando é utilizando o Docker. Preparamos um ambiente que sobe todos os serviços (Banco, RabbitMQ, API e Worker) automaticamente.
+
+### Pré-requisitos
+- Docker e Docker Compose instalados.
+
+### Passo a Passo
+
+1. **Clone o repositório**
+   ```bash
+   git clone https://github.com/IgorAlexandreP/FiapProjetoGames.git
+   cd FiapProjetoGames
+   ```
+
+2. **Suba o ambiente**
+   ```bash
+   docker-compose up -d --build
+   ```
+   *Isso irá compilar o código, criar as imagens e iniciar os containers.*
+
+3. **Acesse a Aplicação**
+   - **Documentação (Swagger)**: [http://localhost:8080/swagger](http://localhost:8080/swagger)
+   - **Métricas**: [http://localhost:8080/metrics](http://localhost:8080/metrics)
+   - **RabbitMQ**: [http://localhost:15672](http://localhost:15672) (Login: guest / guest)
+
+---
+
+## ☁️ Infraestrutura e Kubernetes
+
+O projeto está pronto para rodar em nuvem. Na pasta `k8s/`, você encontra todos os manifestos necessários para deploy em um cluster Kubernetes:
+
+- **Escalabilidade Automática (HPA)**: O sistema monitora o uso de CPU e sobe novas réplicas da API automaticamente quando a demanda aumenta.
+- **Segurança**: Credenciais sensíveis gerenciadas via *Secrets*.
+- **Configuração**: Variáveis de ambiente injetadas via *ConfigMaps*.
+- **Health Checks**: Sondas de `Liveness` e `Readiness` para garantir que apenas containers saudáveis recebam tráfego.
+
+---
+
+## 📂 Estrutura do Código
+
+```
+ProjetoFiap/
+├── ProjetoFiap.API/          # API REST (Porta de entrada)
+├── ProjetoFiap.Worker/       # Serviço de Background (Consumidor de filas)
+├── ProjetoFiap.Domain/       # Regras de Negócio e Entidades
+├── ProjetoFiap.Infrastructure/# Acesso a Dados e Repositórios
+├── ProjetoFiap.Tests/        # Testes Unitários
+├── k8s/                      # Arquivos de configuração Kubernetes
+└── docker-compose.yml        # Orquestração para desenvolvimento local
+```
+
+---
+
+## 📞 Contato
+
+Desenvolvido com ❤️ por **Igor Alexandre**.
+E-mail: irgopk13@gmail.com
