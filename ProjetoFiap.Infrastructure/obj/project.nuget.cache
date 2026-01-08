@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Vrvw78XfFiY=",
+  "dgSpecHash": "Bg/91Vj+bkA=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Irgo\\source\\repos\\ProjetoFiap\\ProjetoFiap.Infrastructure\\ProjetoFiap.Infrastructure.csproj",
+  "projectFilePath": "D:\\ProjetoFIAP\\ProjetoFiap.Infrastructure\\ProjetoFiap.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Irgo\\.nuget\\packages\\microsoft.entityframeworkcore\\9.0.5\\microsoft.entityframeworkcore.9.0.5.nupkg.sha512",
     "C:\\Users\\Irgo\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\9.0.5\\microsoft.entityframeworkcore.abstractions.9.0.5.nupkg.sha512",

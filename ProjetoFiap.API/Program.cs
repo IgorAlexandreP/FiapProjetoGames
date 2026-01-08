@@ -7,10 +7,29 @@ using ProjetoFiap.Domain.Interfaces;
 using ProjetoFiap.Infrastructure.Data;
 using ProjetoFiap.Infrastructure.Repositories;
 using Microsoft.OpenApi.Models;
+using MassTransit;
+using OpenTelemetry.Metrics;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+
+builder.Services.AddHealthChecks();
+
+builder.Services.AddOpenTelemetry()
+    .WithMetrics(metrics =>
+    {
+        metrics.AddAspNetCoreInstrumentation();
+        metrics.AddPrometheusExporter();
+    });
+
+builder.Services.AddMassTransit(x =>
+{
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host(builder.Configuration.GetConnectionString("RabbitMq") ?? "amqp://guest:guest@localhost:5672");
+    });
+});
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseInMemoryDatabase("ProjetoFiapDB"));
@@ -102,6 +121,9 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseOpenTelemetryPrometheusScrapingEndpoint();
+app.MapHealthChecks("/health");
 
 app.MapControllers();
 

@@ -9,3 +9,15 @@ C:\Users\Irgo\source\repos\ProjetoFiap\ProjetoFiap.Domain\obj\Debug\net9.0\Proje
 C:\Users\Irgo\source\repos\ProjetoFiap\ProjetoFiap.Domain\obj\Debug\net9.0\refint\ProjetoFiap.Domain.dll
 C:\Users\Irgo\source\repos\ProjetoFiap\ProjetoFiap.Domain\obj\Debug\net9.0\ProjetoFiap.Domain.pdb
 C:\Users\Irgo\source\repos\ProjetoFiap\ProjetoFiap.Domain\obj\Debug\net9.0\ref\ProjetoFiap.Domain.dll
+D:\ProjetoFIAP\ProjetoFiap.Domain\bin\Debug\net9.0\ProjetoFiap.Domain.deps.json
+D:\ProjetoFIAP\ProjetoFiap.Domain\bin\Debug\net9.0\ProjetoFiap.Domain.dll
+D:\ProjetoFIAP\ProjetoFiap.Domain\bin\Debug\net9.0\ProjetoFiap.Domain.pdb
+D:\ProjetoFIAP\ProjetoFiap.Domain\obj\Debug\net9.0\ProjetoFiap.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\ProjetoFIAP\ProjetoFiap.Domain\obj\Debug\net9.0\ProjetoFiap.Domain.AssemblyInfoInputs.cache
+D:\ProjetoFIAP\ProjetoFiap.Domain\obj\Debug\net9.0\ProjetoFiap.Domain.AssemblyInfo.cs
+D:\ProjetoFIAP\ProjetoFiap.Domain\obj\Debug\net9.0\ProjetoFiap.Domain.csproj.CoreCompileInputs.cache
+D:\ProjetoFIAP\ProjetoFiap.Domain\obj\Debug\net9.0\ProjetoFiap.Domain.sourcelink.json
+D:\ProjetoFIAP\ProjetoFiap.Domain\obj\Debug\net9.0\ProjetoFiap.Domain.dll
+D:\ProjetoFIAP\ProjetoFiap.Domain\obj\Debug\net9.0\refint\ProjetoFiap.Domain.dll
+D:\ProjetoFIAP\ProjetoFiap.Domain\obj\Debug\net9.0\ProjetoFiap.Domain.pdb
+D:\ProjetoFIAP\ProjetoFiap.Domain\obj\Debug\net9.0\ref\ProjetoFiap.Domain.dll

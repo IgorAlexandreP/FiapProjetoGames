@@ -16,6 +16,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "ProjetoFiap.API.Controllers.CheckoutController",
+    "Method": "SimularPagamento",
+    "RelativePath": "api/Checkout/simular-pagamento",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "valor",
+        "Type": "System.Decimal",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ProjetoFiap.API.Controllers.JogosController",
     "Method": "Adicionar",
     "RelativePath": "api/Jogos",

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: projetofiap-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: projetofiap-worker
+  template:
+    metadata:
+      labels:
+        app: projetofiap-worker
+    spec:
+      containers:
+      - name: projetofiap-worker
+        image: projetofiap-worker:latest
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: ConnectionStrings__RabbitMq
+          value: "amqp://guest:guest@rabbitmq-service:5672"
+        resources:
+          requests:
+            memory: "32Mi"
+            cpu: "100m"
+          limits:
+            memory: "64Mi"
+            cpu: "250m"
